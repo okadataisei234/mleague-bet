@@ -103,6 +103,7 @@
       const cands = picks.filter((p) => Number(p.stat.games || 0) > 0);
       if (!cands.length) return { ...aw, winners: [], value: null };
       const max = Math.max(...cands.map((p) => Number(p.stat[aw.stat] || 0)));
+      if (aw.min != null && max < aw.min) return { ...aw, winners: [], value: null, money: {} };  // 例: トップ0回では最多賞なし
       const winners = cands.filter((p) => Number(p.stat[aw.stat] || 0) === max);
       // 同率のとき: ドクロは薄めずに満額払う。ドクロ以外は人数で按分してもらう。
       const money = {};
@@ -117,7 +118,7 @@
     });
 
     // 役満賞
-    const yaks = (yakuman.entries || []).filter((e) => !e.bet || e.bet === bet.id).map((e) => {
+    const yaks = (bet.rules.yakuman_money ? (yakuman.entries || []) : []).filter((e) => !e.bet || e.bet === bet.id).map((e) => {
       const o = ownerOf[e.player];
       const pick = picks.find((p) => p.name === e.player);
       let money = 0;
@@ -143,20 +144,20 @@
     const tbl = h("table", { class: "standings" },
       h("thead", {}, h("tr", {},
         h("th", {}, "順位"), h("th", {}, "名前"), h("th", {}, "総得点"), h("th", {}, "順位金"),
-        h("th", {}, "個人賞"), h("th", {}, "役満"), h("th", {}, "収支"))),
+        h("th", {}, "個人賞"), bet.rules.yakuman_money ? h("th", {}, "役満") : null, h("th", {}, "収支"))),
       h("tbody", {}, sorted.map((o) => h("tr", {},
         h("td", {}, h("span", { class: "rank", style: "background:" + o.color }, o.rank)),
         h("td", {}, o.owner),
         h("td", { class: "num total " + cls(o.total) }, pt(o.total)),
         h("td", { class: "num " + cls(o.money.rank) }, yen(o.money.rank)),
         h("td", { class: "num " + cls(o.money.awards) }, yen(o.money.awards)),
-        h("td", { class: "num " + cls(o.money.yakuman) }, yen(o.money.yakuman)),
+        bet.rules.yakuman_money ? h("td", { class: "num " + cls(o.money.yakuman) }, yen(o.money.yakuman)) : null,
         h("td", { class: "num total " + cls(o.money.total) }, yen(o.money.total)),
       ))));
     main.append(h("section", {},
       h("h2", {}, "現在の収支", h("small", {}, "今日シーズンが終わったらこの金額")),
       h("div", { class: "card table-scroll" }, tbl),
-      h("p", { class: "note" }, "総得点はチーム6人のポイント合計（ドクロはマイナス換算）。順位金 " + bet.rules.rank_money.map((m, i) => `${i + 1}位${yen(m)}`).join(" / ")),
+      h("p", { class: "note" }, `総得点はチーム${bet.teams[0].players.length}人のポイント合計（ドクロはマイナス換算）。順位金 ` + bet.rules.rank_money.map((m, i) => `${i + 1}位${yen(m)}`).join(" / ")),
     ));
 
     // 2. チーム別内訳
@@ -175,7 +176,7 @@
 
     // 3. 個人賞
     main.append(h("section", {},
-      h("h2", {}, "個人賞", h("small", {}, `各 ${bet.rules.award_money.toLocaleString()}円 × 4人。ドクロが取ったら払う側。同率はドクロ以外で按分`)),
+      h("h2", {}, "個人賞", h("small", {}, `各 ${bet.rules.award_money.toLocaleString()}円 × ${owners.length - 1}人。ドクロが取ったら払う側。同率はドクロ以外で按分`)),
       h("div", { class: "grid" }, awardResults.map((aw) => h("div", { class: "card award" + (aw.winners.length > 3 ? " many" : "") },
         h("div", { class: "name" }, aw.name, " ", h("span", { style: "font-weight:400" }, "— " + aw.desc)),
         aw.winners.length
@@ -189,10 +190,11 @@
       ))),
     ));
 
-    // 4. 役満賞
+    // 4. 役満賞（yakuman_money が 0 の賭けでは表示しない）
+    if (bet.rules.yakuman_money) {
     const addUrl = bets.repo ? `https://github.com/${bets.repo}/actions/workflows/add-yakuman.yml` : null;
     main.append(h("section", {},
-      h("h2", {}, "役満賞", h("small", {}, `1回につき ${bet.rules.yakuman_money.toLocaleString()}円 × 4人`)),
+      h("h2", {}, "役満賞", h("small", {}, `1回につき ${bet.rules.yakuman_money.toLocaleString()}円 × ${owners.length - 1}人`)),
       h("div", { class: "card" },
         yaks.length
           ? h("ul", { class: "yak-list" }, yaks.map((y) => h("li", {},
@@ -207,6 +209,7 @@
           h("span", { class: "note", style: "margin-left:8px" }, "GitHub の「Run workflow」から入力")) : null,
       ),
     ));
+    }
 
     // 5. 推移グラフ
     const chartSec = h("section", {}, h("h2", {}, "総得点の推移"));
