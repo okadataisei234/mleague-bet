@@ -209,7 +209,7 @@
           -30000
         ],
         "award_money": 4000,
-        "yakuman_money": 0,
+        "yakuman_money": 4000,
         "skull_inverts_awards": true,
         "skull_inverts_yakuman": true,
         "tie": "split"
