@@ -1,0 +1,151 @@
+:root {
+  color-scheme: light;
+  --bg: #f9f9f7;
+  --surface: #fcfcfb;
+  --ink: #0b0b0b;
+  --ink-2: #52514e;
+  --muted: #898781;
+  --grid: #e1e0d9;
+  --axis: #c3c2b7;
+  --border: rgba(11, 11, 11, 0.10);
+  --accent: #2a78d6;
+  --plus: #006300;
+  --minus: #d03b3b;
+  --skull: #52514e;
+  --s1: #2a78d6;
+  --s2: #eb6834;
+  --s3: #1baf7a;
+  --s4: #eda100;
+  --s5: #e87ba4;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0d0d0d;
+    --surface: #1a1a19;
+    --ink: #ffffff;
+    --ink-2: #c3c2b7;
+    --muted: #898781;
+    --grid: #2c2c2a;
+    --axis: #383835;
+    --border: rgba(255, 255, 255, 0.10);
+    --accent: #3987e5;
+    --plus: #0ca30c;
+    --minus: #e66767;
+    --s1: #3987e5;
+    --s2: #d95926;
+    --s3: #199e70;
+    --s4: #c98500;
+    --s5: #d55181;
+  }
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+a { color: var(--accent); }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+
+.top { border-bottom: 1px solid var(--border); background: var(--surface); }
+.top h1 { font-size: 20px; margin: 16px 0 2px; }
+.meta { margin: 0 0 8px; color: var(--muted); font-size: 12px; }
+.tabs { display: flex; gap: 4px; overflow-x: auto; }
+.tabs button {
+  border: 0; background: none; color: var(--ink-2); font: inherit; font-weight: 600;
+  padding: 8px 12px; border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap;
+}
+.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+
+main { padding: 16px 16px 40px; }
+section { margin: 0 0 28px; }
+h2 { font-size: 17px; margin: 0 0 10px; }
+h2 small { font-weight: 400; color: var(--muted); font-size: 12px; margin-left: 8px; }
+.note { color: var(--muted); font-size: 12px; margin: 6px 0 0; }
+.loading { color: var(--muted); }
+
+.card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px;
+}
+.grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+
+/* 順位表 */
+.standings { width: 100%; border-collapse: collapse; }
+.standings th, .standings td { padding: 8px 6px; text-align: right; border-bottom: 1px solid var(--grid); white-space: nowrap; }
+.standings th { color: var(--muted); font-weight: 600; font-size: 12px; }
+.standings td:first-child, .standings th:first-child,
+.standings td:nth-child(2), .standings th:nth-child(2) { text-align: left; }
+.standings tbody tr:last-child td { border-bottom: 0; }
+.num { font-variant-numeric: tabular-nums; }
+.plus { color: var(--plus); }
+.minus { color: var(--minus); }
+.total { font-weight: 700; }
+.rank { display: inline-block; min-width: 22px; height: 22px; line-height: 22px; text-align: center; border-radius: 50%; font-weight: 700; font-size: 12px; color: #fff; }
+.owner-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+/* チームカード */
+.team-card h3 { margin: 0 0 6px; font-size: 15px; display: flex; justify-content: space-between; align-items: baseline; }
+.team-card h3 .pts { font-size: 18px; }
+.plist { list-style: none; margin: 0; padding: 0; }
+.plist li { display: flex; justify-content: space-between; padding: 4px 0; border-top: 1px solid var(--grid); font-size: 14px; }
+.plist li .n { color: var(--ink-2); }
+.plist li .g { color: var(--muted); font-size: 12px; margin-left: 6px; }
+.skull-tag { font-size: 11px; color: var(--muted); border: 1px solid var(--border); border-radius: 4px; padding: 0 4px; margin-left: 6px; }
+
+/* 個人賞 */
+.award .name { color: var(--muted); font-size: 12px; font-weight: 600; }
+.award .who { font-size: 18px; font-weight: 700; margin: 2px 0; }
+.award .val { color: var(--ink-2); font-size: 13px; }
+.award .money { font-size: 13px; margin-top: 6px; }
+
+/* 役満 */
+.yak-list { list-style: none; margin: 0; padding: 0; }
+.yak-list li { display: flex; gap: 10px; padding: 6px 0; border-top: 1px solid var(--grid); }
+.yak-list li:first-child { border-top: 0; }
+.yak-list .d { color: var(--muted); font-size: 12px; min-width: 80px; }
+.btn { display: inline-block; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface); color: var(--ink); text-decoration: none; font-size: 13px; font-weight: 600; }
+
+/* 選手一覧 */
+.players { width: 100%; border-collapse: collapse; font-size: 13px; }
+.players th, .players td { padding: 6px 6px; border-bottom: 1px solid var(--grid); text-align: right; white-space: nowrap; }
+.players th { color: var(--muted); font-weight: 600; font-size: 11px; cursor: pointer; user-select: none; position: sticky; top: 0; background: var(--surface); }
+.players th[aria-sort] { color: var(--ink); }
+.players td:first-child, .players th:first-child,
+.players td:nth-child(2), .players th:nth-child(2),
+.players td:nth-child(3), .players th:nth-child(3) { text-align: left; }
+.players tr.skull td { color: var(--ink-2); }
+.players td.lead { font-weight: 700; }
+
+/* グラフ */
+.chart-wrap { position: relative; }
+.chart { width: 100%; height: auto; display: block; }
+.chart .grid-line { stroke: var(--grid); stroke-width: 1; }
+.chart .axis-line { stroke: var(--axis); stroke-width: 1; }
+.chart text { fill: var(--muted); font-size: 11px; font-family: inherit; }
+.chart .series { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.chart .dot { stroke: var(--surface); stroke-width: 2; }
+.chart .dlabel { font-weight: 600; fill: var(--ink-2); }
+.chart .crosshair { stroke: var(--axis); stroke-dasharray: 3 3; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 6px 0 0; font-size: 12px; color: var(--ink-2); }
+.legend span::before { content: ""; display: inline-block; width: 12px; height: 3px; border-radius: 2px; background: var(--c); margin-right: 5px; vertical-align: middle; }
+
+.tooltip {
+  position: fixed; z-index: 10; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 8px 10px; font-size: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.15); max-width: 220px;
+}
+.tooltip b { display: block; margin-bottom: 4px; }
+.tooltip div { display: flex; justify-content: space-between; gap: 12px; }
+.tooltip i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; }
+
+.foot { color: var(--muted); font-size: 12px; padding-bottom: 32px; }
+.foot p { margin: 4px 0; }
+.award.many .who { font-size: 14px; display: inline; }
+.award.many .val { display: inline; margin-left: 6px; }
+.award.many > div { margin-bottom: 2px; }
+.award .money span { white-space: nowrap; }

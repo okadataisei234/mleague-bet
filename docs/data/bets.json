@@ -1,0 +1,80 @@
+{
+  "bets": [
+    {
+      "id": "abeam",
+      "name": "アビーム同期ドラフト",
+      "season": "2026-27",
+      "rules": {
+        "rank_money": [35000, 10000, -5000, -15000, -25000],
+        "award_money": 3000,
+        "yakuman_money": 3000,
+        "skull_inverts_awards": true,
+        "skull_inverts_yakuman": true,
+        "tie": "split"
+      },
+      "awards": [
+        { "id": "mvp",        "name": "MVP",       "stat": "points",          "desc": "ポイントが一番多い選手" },
+        { "id": "last_avoid", "name": "ラス回避賞", "stat": "last_avoid_rate", "desc": "ラス回避率が一番高い選手" },
+        { "id": "best_score", "name": "最多得点賞", "stat": "best_game",       "desc": "1試合で獲得したポイントが一番高い選手" },
+        { "id": "top",        "name": "最多賞",     "stat": "rank1",           "desc": "トップ回数が一番多い選手" }
+      ],
+      "teams": [
+        {
+          "owner": "たいせい",
+          "players": [
+            { "name": "伊達 朱里紗", "label": "伊達" },
+            { "name": "下石 戟",     "label": "下石" },
+            { "name": "石井 一馬",   "label": "石井" },
+            { "name": "多井 隆晴",   "label": "多井" },
+            { "name": "松本 吉弘",   "label": "松本" },
+            { "name": "HIRO 柴田",   "label": "HIRO柴田", "skull": true }
+          ]
+        },
+        {
+          "owner": "まる",
+          "players": [
+            { "name": "園田 賢",   "label": "園田" },
+            { "name": "醍醐 大",   "label": "醍醐" },
+            { "name": "萩原 聖人", "label": "萩原", "skull": true },
+            { "name": "白鳥 翔",   "label": "白鳥" },
+            { "name": "鈴木 大介", "label": "大介" },
+            { "name": "東城 りお", "label": "東城" }
+          ]
+        },
+        {
+          "owner": "村上",
+          "players": [
+            { "name": "仲林 圭",     "label": "仲林" },
+            { "name": "朝倉 康心",   "label": "朝倉" },
+            { "name": "竹内 元太",   "label": "竹内" },
+            { "name": "逢川 恵夢",   "label": "逢川" },
+            { "name": "佐野 ひなこ", "label": "佐野", "skull": true },
+            { "name": "三浦 智博",   "label": "三浦" }
+          ]
+        },
+        {
+          "owner": "永田",
+          "players": [
+            { "name": "堀 慎吾",     "label": "堀" },
+            { "name": "佐々木 寿人", "label": "佐々木" },
+            { "name": "勝又 健志",   "label": "勝又" },
+            { "name": "瑞原 明奈",   "label": "瑞原" },
+            { "name": "中田 花奈",   "label": "中田", "skull": true },
+            { "name": "永井 孝典",   "label": "永井" }
+          ]
+        },
+        {
+          "owner": "小林",
+          "players": [
+            { "name": "鈴木 優",     "label": "鈴木優" },
+            { "name": "渡辺 太",     "label": "渡辺" },
+            { "name": "二階堂 亜樹", "label": "二階堂" },
+            { "name": "鈴木 たろう", "label": "たろう" },
+            { "name": "茅森 早香",   "label": "茅森", "skull": true },
+            { "name": "内川 幸太郎", "label": "内川" }
+          ]
+        }
+      ]
+    }
+  ]
+}
