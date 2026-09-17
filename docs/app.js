@@ -104,17 +104,15 @@
       if (!cands.length) return { ...aw, winners: [], value: null };
       const max = Math.max(...cands.map((p) => Number(p.stat[aw.stat] || 0)));
       const winners = cands.filter((p) => Number(p.stat[aw.stat] || 0) === max);
-      for (const w of winners) {
-        const inv = w.skull && bet.rules.skull_inverts_awards ? -1 : 1;
-        const unit = (bet.rules.award_money * inv) / winners.length;
-        for (const o of owners) o.money.awards += o.idx === w.ownerIdx ? unit * (n - 1) : -unit;
-      }
+      // 同率のとき: ドクロは薄めずに満額払う。ドクロ以外は人数で按分してもらう。
       const money = {};
+      const normals = winners.filter((w) => !(w.skull && bet.rules.skull_inverts_awards));
       for (const w of winners) {
-        const inv = w.skull && bet.rules.skull_inverts_awards ? -1 : 1;
-        const unit = (bet.rules.award_money * inv) / winners.length;
+        const isSkull = w.skull && bet.rules.skull_inverts_awards;
+        const unit = isSkull ? -bet.rules.award_money : bet.rules.award_money / normals.length;
         for (const o of owners) money[o.owner] = (money[o.owner] || 0) + (o.idx === w.ownerIdx ? unit * (n - 1) : -unit);
       }
+      for (const o of owners) o.money.awards += money[o.owner] || 0;
       return { ...aw, winners, value: max, money };
     });
 
@@ -177,7 +175,7 @@
 
     // 3. 個人賞
     main.append(h("section", {},
-      h("h2", {}, "個人賞", h("small", {}, `各 ${bet.rules.award_money.toLocaleString()}円 × 4人。ドクロが取ったら払う側`)),
+      h("h2", {}, "個人賞", h("small", {}, `各 ${bet.rules.award_money.toLocaleString()}円 × 4人。ドクロが取ったら払う側。同率はドクロ以外で按分`)),
       h("div", { class: "grid" }, awardResults.map((aw) => h("div", { class: "card award" + (aw.winners.length > 3 ? " many" : "") },
         h("div", { class: "name" }, aw.name, " ", h("span", { style: "font-weight:400" }, "— " + aw.desc)),
         aw.winners.length
