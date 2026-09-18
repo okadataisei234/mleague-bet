@@ -1,7 +1,7 @@
 {
  "season": "2026-27",
  "source": "https://m-league.jp/stats/",
- "fetched_at": "2026-09-18T04:34:49+09:00",
+ "fetched_at": "2026-09-18T16:56:07+09:00",
  "players": [
   {
    "name": "石井 一馬",
@@ -547,7 +547,7 @@
    "last_avoid_rate": 1,
    "best_score": 29900,
    "avg_agari": 8800,
-   "furo_rate": 0.25,
+   "furo_rate": 0.33,
    "riichi_rate": 0.16,
    "agari_rate": 0.16,
    "houjuu_rate": 0.08,
