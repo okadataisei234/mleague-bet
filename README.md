@@ -13,6 +13,6 @@ Mリーグ 2026-27 の公式成績をもとに、友人間の賭けの途中経�
 ## ローカルで確認
 
 ```bash
-python scripts/scrape.py
-python -m http.server 8765 --directory docs
+python3 scripts/scrape.py
+python3 -m http.server 8765 --directory docs
 ```
